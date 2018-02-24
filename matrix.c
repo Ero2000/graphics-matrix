@@ -64,7 +64,7 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
       for (c = 0; c < a -> cols; c++){
         e = 0;
         for (d = 0; d < b -> rows; d++){
-          e += (a -> m[d][c]) * (b -> m[c][d]);  
+          e += (b -> m[d][c]) * (a -> m[c][d]);  
         }
         ret -> m[f][c] = e;
       }
