@@ -82,7 +82,7 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
     b -> m = ret -> m;
   }
   else {
-    printf ("Error, unable to multiply matrices")
+    printf ("Error, unable to multiply matrices");
     return;
   }
 }
