@@ -57,29 +57,29 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
   int f;
   struct matrix *ret;
 
-  if (a -> a.rows == b -> b.cols){
-    for (f = 0; f < b -> b.cols; f++){
-      for (c = 0; c < b -> b.cols; c++){
+  if (a -> m.rows == b -> m.cols){
+    for (f = 0; f < b -> m.cols; f++){
+      for (c = 0; c < b -> m.cols; c++){
         e = 0;
-        for (d = 0; d < a -> a.rows; d++){
-          e += (a -> a[d][c]) * (b -> b[c][d]);  
+        for (d = 0; d < a -> m.rows; d++){
+          e += (a -> m[d][c]) * (b -> m[c][d]);  
         }
         ret -> m[f][c] = e;
       }
     }
-    b -> b = ret -> ret;
+    b -> m = ret -> m;
   }
-  else if (b -> b.rows == a -> a.cols){
-    for (f = 0; f < b -> a.cols; f++){
-      for (c = 0; c < b -> a.cols; c++){
+  else if (b -> m.rows == a -> m.cols){
+    for (f = 0; f < b -> m.cols; f++){
+      for (c = 0; c < b -> m.cols; c++){
         e = 0;
-        for (d = 0; d < a -> b.rows; d++){
-          e += (b -> b[d][c]) * (a -> a[c][d]);  
+        for (d = 0; d < a -> m.rows; d++){
+          e += (b -> m[d][c]) * (a -> m[c][d]);  
         }
         ret -> m[f][c] = e;
       }
     }
-    b -> b = ret -> ret;
+    b -> m = ret -> m;
   }
   else {
     printf ("Error, unable to multiply matrices")
