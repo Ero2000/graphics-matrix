@@ -21,7 +21,7 @@ int main() {
 
   struct matrix *test;
   test = new_matrix(4, 3);
-  test -> test[0][0] = 25;
+  test -> m[0][0] = 25;
 
   matrix_mult(edges, test);
   print_matrix(test);
