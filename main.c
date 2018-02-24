@@ -20,7 +20,7 @@ int main() {
   print_matrix(edges);
 
   struct matrix *test;
-  test -> test = new_matrix(4, 3);
+  test = new_matrix(4, 3);
   test -> test[0][0] = 25;
 
   matrix_mult(edges, test);
