@@ -55,26 +55,8 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
   int d;
   int e;
   int f;
-  struct matrix *ret;
-
-  if (a -> rows == b -> cols){
-    ret = new_matrix(b -> rows, b -> cols);
-
-    for (f = 0; f < a -> cols; f++){
-      for (c = 0; c < a -> cols; c++){
-        e = 0;
-        for (d = 0; d < b -> rows; d++){
-          e += (a -> m[d][c]) * (b -> m[c][d]);  
-        }
-        ret -> m[f][c] = e;
-      }
-    }
-    b = ret;
-  }
-
-  else if (b -> rows == a -> cols){
-    ret = new_matrix(b -> rows, b -> cols);
-
+  struct matrix *ret = new_matrix(b -> rows, b -> cols);
+  
     for (f = 0; f < b -> cols; f++){
       for (c = 0; c < b -> cols; c++){
         e = 0;
@@ -85,12 +67,6 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
       }
     }
     b -> m = ret -> m;
-  }
-
-  else {
-    printf ("Error, unable to multiply matrices");
-    return;
-  }
 }
 
 
