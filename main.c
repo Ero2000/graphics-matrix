@@ -6,6 +6,7 @@
 #include "display.h"
 #include "draw.h"
 #include "matrix.h"
+#include "math.h"
 
 int main() {
 
