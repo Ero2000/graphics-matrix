@@ -51,22 +51,30 @@ Returns:
 a*b -> b
 */
 void matrix_mult(struct matrix *a, struct matrix *b) {
-  int c;
-  int d;
-  int e;
-  int f;
-  struct matrix *ret = new_matrix(b -> rows, b -> cols);
-  
-    for (f = 0; f < b -> cols; f++){
-      for (c = 0; c < b -> cols; c++){
-        e = 0;
-        for (d = 0; d < a -> rows; d++){
-          e += (b -> m[d][c]) * (a -> m[c][d]);  
+  /* Assuming that a and b have at least one dimension that matches it's complement, and b is smaller */
+  int ar; // a rows
+  int br; // b rows
+  int bc; // b cols
+  int temp; // used to compile values for each element of the final product
+  struct matrix *ret = new_matrix(b -> rows, b -> cols); // inits a temp matrix
+
+  if (a -> cols == b -> rows){
+    for (ar = 0; ar < a -> rows; ar++){
+      for (bc = 0; bc < b -> cols; bc++){
+        for (br = 0; br < b -> rows; br++){
+          temp += (a -> m[ar][br]) * (b -> m[bc][br]);
         }
-        ret -> m[f][c] = e;
+        ret -> m[ar][bc] = temp;
+        temp = 0;
       }
     }
-    b -> m = ret -> m;
+  } 
+  else {
+    printf("Error, neither rows/cols are =, unable to multiply");
+    return;
+  }
+  copy_matrix (ret, b); // copies over matrix
+  free_matrix (ret); // "frees" the temp matrix by reallocation
 }
 
 
