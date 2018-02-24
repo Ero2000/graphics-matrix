@@ -32,7 +32,7 @@ turns m in to an identity matrix
 void ident(struct matrix *m) {
   int a;
   int b;
-  
+
   for (a = 0; a < m -> rows; a++){
     for (b = 0; b < a+1; b++){
       if (b == a){
@@ -51,7 +51,40 @@ Returns:
 a*b -> b
 */
 void matrix_mult(struct matrix *a, struct matrix *b) {
-  printf("yeet\n");
+  int c;
+  int d;
+  int e;
+  int f;
+  struct matrix *ret;
+
+  if (a -> a.rows == b -> b.cols){
+    for (f = 0; f < b -> b.cols; f++){
+      for (c = 0; c < b -> b.cols; c++){
+        e = 0;
+        for (d = 0; d < a -> a.rows; d++){
+          e += (a -> a[d][c]) * (b -> b[c][d]);  
+        }
+        ret -> ret[f][c] = e;
+      }
+    }
+    b -> b = ret -> ret;
+  }
+  else if (b -> b.rows == a -> a.cols){
+    for (f = 0; f < b -> a.cols; f++){
+      for (c = 0; c < b -> a.cols; c++){
+        e = 0;
+        for (d = 0; d < a -> b.rows; d++){
+          e += (b -> b[d][c]) * (a -> a[c][d]);  
+        }
+        ret -> ret[f][c] = e;
+      }
+    }
+    b -> b = ret -> ret;
+  }
+  else {
+    printf ("Error, unable to multiply matrices")
+    return;
+  }
 }
 
 
