@@ -97,9 +97,8 @@ Returns:
 3. free actual matrix
 */
 void free_matrix(struct matrix *m) {
-	.
-
   int i;
+	
   for (i=0;i<m->rows;i++) {
       free(m->m[i]);
     }
