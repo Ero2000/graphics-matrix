@@ -19,12 +19,9 @@ void print_matrix(struct matrix *m) {
 		for (b = 0; b < m -> cols; b++) {
 			printf("%f ", m -> m[a][b]); /* %d => refers to variables that are changing, in this case m[a][b] */
 		}
-		printf("/n"); /* /n => new line */
+		printf("\n"); /* \n => new line */
 	}
 }
-void ident(struct matrix *m) {
-  int a;
-  int b;
 
 /*-------------- void ident() --------------
 Inputs:  struct matrix *m <-- assumes m is a square matrix
@@ -32,7 +29,10 @@ Returns:
 
 turns m in to an identity matrix
 */
-
+void ident(struct matrix *m) {
+  int a;
+  int b;
+  
   for (a = 0; a < m -> rows; a++){
     for (b = 0; b < a+1; b++){
       if (b == a){
