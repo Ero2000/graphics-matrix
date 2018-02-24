@@ -19,6 +19,6 @@ int main() {
   /*
   draw_lines(edges, s, c);
   display(s);
-  */
   free_matrix( edges );
+  */
 }
