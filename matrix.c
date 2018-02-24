@@ -57,11 +57,11 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
   int f;
   struct matrix *ret;
 
-  if (a -> m.rows == b -> m.cols){
-    for (f = 0; f < b -> m.cols; f++){
-      for (c = 0; c < b -> m.cols; c++){
+  if (a -> rows == b -> cols){
+    for (f = 0; f < b -> cols; f++){
+      for (c = 0; c < b -> cols; c++){
         e = 0;
-        for (d = 0; d < a -> m.rows; d++){
+        for (d = 0; d < a -> rows; d++){
           e += (a -> m[d][c]) * (b -> m[c][d]);  
         }
         ret -> m[f][c] = e;
@@ -69,11 +69,11 @@ void matrix_mult(struct matrix *a, struct matrix *b) {
     }
     b -> m = ret -> m;
   }
-  else if (b -> m.rows == a -> m.cols){
-    for (f = 0; f < b -> m.cols; f++){
-      for (c = 0; c < b -> m.cols; c++){
+  else if (b -> rows == a -> cols){
+    for (f = 0; f < b -> cols; f++){
+      for (c = 0; c < b -> cols; c++){
         e = 0;
-        for (d = 0; d < a -> m.rows; d++){
+        for (d = 0; d < a -> rows; d++){
           e += (b -> m[d][c]) * (a -> m[c][d]);  
         }
         ret -> m[f][c] = e;
