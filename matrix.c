@@ -22,6 +22,9 @@ void print_matrix(struct matrix *m) {
 		printf("/n"); /* /n => new line */
 	}
 }
+void ident(struct matrix *m) {
+  int a;
+  int b;
 
 /*-------------- void ident() --------------
 Inputs:  struct matrix *m <-- assumes m is a square matrix
@@ -29,9 +32,6 @@ Returns:
 
 turns m in to an identity matrix
 */
-void ident(struct matrix *m) {
-  int a;
-  int b;
 
   for (a = 0; a < m -> rows; a++){
     for (b = 0; b < a+1; b++){
