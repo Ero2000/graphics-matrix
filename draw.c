@@ -49,55 +49,114 @@ Go through points 2 at a time and call draw_line to add that line
 to the screen
 ====================*/
 void draw_lines( struct matrix * points, screen s, color c) {
-  int col;
+	int cols = points->cols;
+	if (cols % 2 == 1)
+		cols = cols - 1;
 
-  while (col < points -> cols){
-    draw_line((points -> m[0][col]),(points -> m[1][col]),(points -> m[0][col+1]),(points -> m[1][col+1]),s,c);
-    col += 2;
+	int i, x0, y0, x1, y1;
+
+	for(i=0; i<cols; i=i+2){
+		x0 = points->m[0][i];
+		y0 = points->m[1][i];
+		x1 = points->m[0][i+1];
+		y1 = points->m[1][i+1];
+		//printf("x0: %d, y0: %d, x1: %d, y1: %d\n", x0, y0, x1, y1);
+		draw_line(x0, y0, x1, y1, s, c);
+	}
+}
+int get_octant(int x0, int y0, int x1, int y1) {
+  int delta_x = x1 - x0;
+  int delta_y = y1 - y0;
+
+  if (delta_x >= delta_y && delta_y >= 0) {
+    return 1;
   }
+  if (delta_x <= delta_y && delta_y >= 0) {
+    return 2;
+  }
+  if (delta_x >= -1 * delta_y && delta_y < 0) {
+    return 8;
+  }
+  if (delta_x <= -1 * delta_y && delta_y < 0) {
+    return 7;
+  }
+
+
+  printf("not right\n");
+  return -1;
 }
 
-
-
-
-
+//Insert your line algorithm here
 void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
-
-  int x, y, d, A, B;
-  //swap points if going right -> left
-  int xt, yt;
-  if (x0 > x1) {
-    xt = x0;
-    yt = y0;
-    x0 = x1;
-    y0 = y1;
-    x1 = xt;
-    y1 = yt;
+  // f (x, y) = Ax + By + C
+  if (x1 - x0 < 0) {
+    draw_line(x1, y1, x0, y0, s, c);
   }
-
-  x = x0;
-  y = y0;
-  A = 2 * (y1 - y0);
-  B = -2 * (x1 - x0);
-
-  //octant 1
-  if ( abs(x1 - x0) >= abs(y1 - y0) ) {
-
+  else {
+    int A,B,d,x,y;
+    int octant = get_octant(x0, y0, x1, y1);
+    if (octant < 0) {
+      return;
+    }
+    x = x0;
+    y = y0;
+    A = y1 - y0;
+    B = x0 - x1;
     //octant 1
-    if ( A > 0 ) {
-      d = A + B/2; //not really division since B = 2B
-
-      while ( x < x1 ) {
-        plot( s, c, x, y );
-        if ( d > 0 ) {
-          y+= 1;
-          d+= B;
+    if (octant == 1) {
+      // printf("octant 1/5\n");
+      d = 2 * A + B;
+      while (x < x1) {
+        plot (s, c, x, y);
+        if (d > 0) {
+          y++;
+          d += 2 * B;
         }
         x++;
-        d+= A;
-      } //end octant 1 while
-      plot( s, c, x1, y1 );
-    } //end octant 1
-  }
+        d += 2 * A;
+      }
+    }
 
-} //end draw_line
+    else if (octant == 2) {
+      // printf("octant 2/6\n");
+      d = A + 2 * B;
+      while (y < y1) {
+        plot (s, c, x, y);
+        if (d < 0) {
+          x++;
+          d += 2 * A;
+        }
+        y++;
+        d += 2 * B;
+      }
+    }
+
+    else if (octant == 7) {
+      // printf("octant 3/7\n");
+      d = A - 2 * B;
+      while (y > y1) {
+        plot (s, c, x, y);
+        if (d > 0) {
+          x++;
+          d += 2 * A;
+        }
+        y--;
+        d -= 2 * B;
+      }
+    }
+
+    else {
+      // printf("octant 4/8\n");
+      d = 2 * A - B;
+      while (x < x1) {
+        plot (s, c, x, y);
+        if (d < 0) {
+          y--;
+          d -= 2 * B;
+        }
+        x++;
+        d += 2 * A;
+      }
+    }
+  }
+}
