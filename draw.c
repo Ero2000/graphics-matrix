@@ -17,7 +17,7 @@ if points is full, should call grow on points
 ====================*/
 void add_point( struct matrix * points, double x, double y, double z) {
   if (points -> lastcol == points -> cols){
-    grow_matrix (points, (points -> cols) + 1);
+    grow_matrix (points, (points -> cols) + 100);
   }
   points -> m[0][points -> lastcol] = x;
   points -> m[1][points -> lastcol] = y;
@@ -93,69 +93,69 @@ void draw_line(int x0, int y0, int x1, int y1, screen s, color c) {
     draw_line(x1, y1, x0, y0, s, c);
   }
   else {
-    int A,B,d,x,y;
+    int dx,dy,d,x,y;
     int octant = get_octant(x0, y0, x1, y1);
     if (octant < 0) {
       return;
     }
     x = x0;
     y = y0;
-    A = y1 - y0;
-    B = x0 - x1;
+    dy = y1 - y0;
+    dx = x0 - x1;
     //octant 1
     if (octant == 1) {
       // printf("octant 1/5\n");
-      d = 2 * A + B;
+      d = 2 * dy + dx;
       while (x < x1) {
         plot (s, c, x, y);
         if (d > 0) {
           y++;
-          d += 2 * B;
+          d += 2 * dx;
         }
         x++;
-        d += 2 * A;
+        d += 2 * dy;
       }
     }
 
     else if (octant == 2) {
       // printf("octant 2/6\n");
-      d = A + 2 * B;
+      d = dy + 2 * dx;
       while (y < y1) {
         plot (s, c, x, y);
         if (d < 0) {
           x++;
-          d += 2 * A;
+          d += 2 * dy;
         }
         y++;
-        d += 2 * B;
+        d += 2 * dx;
       }
     }
 
     else if (octant == 7) {
       // printf("octant 3/7\n");
-      d = A - 2 * B;
+      d = dy - 2 * dx;
       while (y > y1) {
         plot (s, c, x, y);
         if (d > 0) {
           x++;
-          d += 2 * A;
+          d += 2 * dy;
         }
         y--;
-        d -= 2 * B;
+        d -= 2 * dx;
       }
     }
 
     else {
       // printf("octant 4/8\n");
-      d = 2 * A - B;
+      d = 2 * dy - dx;
       while (x < x1) {
         plot (s, c, x, y);
         if (d < 0) {
           y--;
-          d -= 2 * B;
+          d -= 2 * dx;
         }
         x++;
-        d += 2 * A;
+        d += 2 * dy;
       }
     }
   }
